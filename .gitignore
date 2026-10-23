@@ -27,3 +27,7 @@ dist-ssr
 .env
 .env.local
 .env.*
+
+# Scripts SQL de base de datos
+bucket.sql
+BD_del_Sistema_corregido.sql

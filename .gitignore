@@ -31,3 +31,5 @@ dist-ssr
 # Scripts SQL de base de datos
 bucket.sql
 BD_del_Sistema_corregido.sql
+triggers_y_funciones_stock.sql
+*.sql

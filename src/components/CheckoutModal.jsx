@@ -59,7 +59,7 @@ export default function CheckoutModal({ storeInfo }) {
 
     // VALIDACIÓN 1: El nombre solo permite letras y espacios
     if (name === 'nombre') {
-      value = value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, '');
+      value = value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\s]/g, '');
     }
 
     // VALIDACIÓN 2: El teléfono solo permite números y máximo 8 dígitos
@@ -117,18 +117,32 @@ export default function CheckoutModal({ storeInfo }) {
       clearCart();
       setSuccess(true);
 
-      // 4. Mostrar la animación durante 3.2 segundos y luego redireccionar automáticamente a WhatsApp
-      redirectTimerRef.current = setTimeout(() => {
-        setIsCheckoutOpen(false);
-        setSuccess(false);
-        setFormData({ nombre: '', telefono: '', departamento: STORE_CONFIG.DEFAULT_CITY });
+      // Detectar si el usuario está navegando desde un dispositivo móvil
+      const isMobile =
+        typeof navigator !== 'undefined' &&
+        /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 
-        // Intentar abrir en pestaña nueva; si el navegador bloquea popups, redirigir en la misma
-        const opened = window.open(waUrl, '_blank');
-        if (!opened) {
+      // 4. Mostrar animación durante 2.8 segundos y luego redirigir a WhatsApp
+      redirectTimerRef.current = setTimeout(() => {
+        closeAndReset();
+
+        if (isMobile) {
+          // En smartphone: invoca directamente la app nativa de WhatsApp
           window.location.href = waUrl;
+        } else {
+          // En PC: intentar abrir en pestaña nueva; si el navegador bloquea el popup, abrir en la misma pestaña
+          let opened;
+          try {
+            opened = window.open(waUrl, '_blank');
+          } catch {
+            opened = null;
+          }
+
+          if (!opened || opened.closed || typeof opened.closed === 'undefined') {
+            window.location.href = waUrl;
+          }
         }
-      }, 3200);
+      }, 2800);
     } catch (err) {
       console.error('Error al procesar checkout:', err);
       setError(err.message || 'Ocurrió un error al procesar el pedido. Inténtalo de nuevo.');
@@ -170,10 +184,10 @@ export default function CheckoutModal({ storeInfo }) {
                 <path className="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" />
               </svg>
             </div>
-            <h3 style={{ color: '#22c55e', marginBottom: '10px', fontSize: '1.6rem', textAlign: 'center' }}>
+            <h3 style={{ color: '#22c55e', marginBottom: '8px', fontSize: '1.5rem', textAlign: 'center' }}>
               ¡Pedido Registrado con Éxito!
             </h3>
-            <p style={{ color: '#6B7280', fontSize: '1rem', textAlign: 'center' }}>
+            <p style={{ color: '#6B7280', fontSize: '0.95rem', textAlign: 'center' }}>
               Abriendo WhatsApp para coordinar tu envío...
             </p>
           </div>

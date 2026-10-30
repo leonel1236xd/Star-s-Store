@@ -170,8 +170,12 @@ export default function Catalog() {
             No hay productos disponibles por el momento.
           </div>
         ) : (
-          filteredProducts.map((product) => (
-            <div key={product.id} className="reveal">
+          filteredProducts.map((product, index) => (
+            <div
+              key={`${activeFilter}-${product.id}`}
+              className="reveal product-stagger"
+              style={{ animationDelay: `${(index % 8) * 55}ms` }}
+            >
               <ProductCard product={product} />
             </div>
           ))

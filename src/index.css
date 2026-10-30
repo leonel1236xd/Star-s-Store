@@ -146,16 +146,17 @@ ul,ol{list-style:none}
 }
 
 @keyframes cart-pop {
-  0% { transform: scale(1); }
-  35% { transform: scale(1.15); box-shadow: 0 0 20px rgba(91,192,235,0.55); border-color: var(--accent-blue); }
-  70% { transform: scale(0.96); }
-  100% { transform: scale(1); }
+  0% { transform: scale(1) translateY(0); }
+  25% { transform: scale(1.18) translateY(-6px); box-shadow: 0 8px 24px rgba(91,192,235,0.6); border-color: var(--accent-blue); }
+  50% { transform: scale(0.94) translateY(2px); }
+  75% { transform: scale(1.06) translateY(-2px); }
+  100% { transform: scale(1) translateY(0); }
 }
 
 @keyframes badge-bounce {
   0% { transform: scale(1); }
-  40% { transform: scale(1.5); background: var(--accent-blue); color: var(--indigo-deep); }
-  75% { transform: scale(0.9); }
+  35% { transform: scale(1.5) translateY(-4px); background: var(--accent-blue); color: var(--indigo-deep); box-shadow: 0 0 12px rgba(91, 192, 235, 0.9); }
+  70% { transform: scale(0.9); }
   100% { transform: scale(1); }
 }
 .btn-cart svg{width:20px;height:20px}
@@ -620,7 +621,7 @@ ul,ol{list-style:none}
   position: relative;
 }
 .product-card.upcoming::after {
-  content: 'PRÃ“XIMAMENTE';
+  content: 'PRÓXIMAMENTE';
   position: absolute;
   top: 40%; left: 50%;
   transform: translate(-50%, -50%) rotate(-12deg);
@@ -1326,13 +1327,13 @@ animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards;
 @keyframes scale { 0%, 100% { transform: none; } 50% { transform: scale3d(1.1, 1.1, 1); } }
 @keyframes fill { 100% { box-shadow: inset 0px 0px 0px 50px #22c55e; } }
 
-/* --- ESTILOS PARA EL COMBOBOX (Select) EN EL CHECKOUT --- */
+/* --- ESTILOS PARA EL COMBOBOX (Select Azul) EN EL CHECKOUT --- */
 select.form-input {
   width: 100%;
   padding: 13px 16px;
-  background-color: #F9FAFB;
-  border: 1.5px solid #E5E7EB;
-  color: #111111;
+  background-color: var(--indigo-mid) !important;
+  border: 1.5px solid rgba(91, 192, 235, 0.25);
+  color: var(--white) !important;
   border-radius: 10px;
   font-family: inherit;
   font-size: 0.9rem;
@@ -1340,11 +1341,11 @@ select.form-input {
   outline: none;
   transition: border-color 0.2s, box-shadow 0.2s, background-color 0.2s;
 
-  /* Reset visual del navegador y flecha personalizada */
+  /* Reset visual del navegador y flecha personalizada azul */
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
-  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23374151' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%235BC0EB' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
   background-repeat: no-repeat;
   background-position: right 1rem center;
   background-size: 1.1em;
@@ -1353,15 +1354,15 @@ select.form-input {
 }
 
 select.form-input:focus {
-  border-color: #111111;
-  box-shadow: 0 0 0 3px rgba(17, 17, 17, 0.08);
-  background-color: #FFFFFF;
-  color: #111111;
+  border-color: var(--accent-blue) !important;
+  box-shadow: 0 0 0 3px rgba(91, 192, 235, 0.25) !important;
+  background-color: var(--indigo-mid) !important;
+  color: var(--white) !important;
 }
 
 /* Las opciones que se despliegan */
 select.form-input option {
-  background-color: #FFFFFF;
-  color: #111111;
+  background-color: var(--indigo-deep) !important;
+  color: var(--white) !important;
   padding: 10px;
 }

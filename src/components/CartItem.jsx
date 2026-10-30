@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import {
   getUniqueColors,
   getAvailableSizesForColor,
@@ -13,6 +13,7 @@ export default function CartItem({
   updateCartItem,
   removeFromCart,
 }) {
+  const [isRemoving, setIsRemoving] = useState(false);
   const variantes = useMemo(() => item.variantes || [], [item.variantes]);
 
   // Colores únicos para este producto
@@ -48,8 +49,16 @@ export default function CartItem({
     updateCartItem(index, { size: newSize });
   };
 
+  const handleRemove = () => {
+    if (isRemoving) return;
+    setIsRemoving(true);
+    setTimeout(() => {
+      removeFromCart(index);
+    }, 280);
+  };
+
   return (
-    <div className="cart-item">
+    <div className={`cart-item ${isRemoving ? 'removing' : ''}`}>
       <div className="cart-item-img">
         {item.image ? (
           <img src={item.image} alt={item.name} loading="lazy" />
@@ -167,7 +176,8 @@ export default function CartItem({
       <button
         type="button"
         className="btn-remove-item"
-        onClick={() => removeFromCart(index)}
+        onClick={handleRemove}
+        disabled={isRemoving}
         aria-label={`Eliminar ${item.name} del carrito`}
       >
         <svg viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5" fill="none">

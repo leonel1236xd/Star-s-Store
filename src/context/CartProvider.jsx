@@ -67,10 +67,6 @@ export function CartProvider({ children }) {
       ];
     });
 
-    if (wasSuccessful) {
-      setIsCartOpen(true);
-    }
-
     return wasSuccessful;
   }, []);
 

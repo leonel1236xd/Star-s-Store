@@ -7,7 +7,7 @@ export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [cartBump, setCartBump] = useState(false);
 
-  // Micro-interacción: Halo y rebote elástico al cambiar cantidad del carrito
+  // Micro-interacción: Salto elástico y halo al cambiar cantidad del carrito
   useEffect(() => {
     if (cartCount === 0) return;
     const startTimer = setTimeout(() => setCartBump(true), 0);

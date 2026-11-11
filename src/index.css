@@ -49,7 +49,15 @@
 
 /* ---------- Reset & Base ---------- */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth;-webkit-tap-highlight-color:transparent;font-size:16px}
+html{
+  -webkit-tap-highlight-color:transparent;
+  font-size:16px;
+}
+@media(min-width:768px){
+  html{
+    scroll-behavior:smooth;
+  }
+}
 body{
   font-family:var(--font-body);
   background:var(--indigo-deep);
@@ -443,16 +451,12 @@ ul,ol{list-style:none}
 .carousel-track{
   display:flex;
   width:100%;height:100%;
-  overflow-x:auto;
-  scroll-snap-type:x mandatory;
-  -webkit-overflow-scrolling:touch;
-  scrollbar-width:none;
+  touch-action:pan-y;
 }
-.carousel-track::-webkit-scrollbar{display:none}
 .carousel-slide{
   flex:0 0 100%;
-  scroll-snap-align:start;
   position:relative;
+  touch-action:pan-y;
 }
 .carousel-slide img{
   width:100%;height:100%;
@@ -1094,16 +1098,14 @@ a.contact-value:hover {
 
 /* Clases para animación al hacer scroll */
 .reveal {
-opacity: 0;
-transform: translateY(30px);
-transition: opacity 0.7s cubic-bezier(.25,.46,.45,.94), transform 0.7s cubic-bezier(.25,.46,.45,.94);
-will-change: opacity, transform;
-/* NUEVO: Obliga al contenedor animado a estirarse, igualando todas las tarjetas */
-height: 100%;
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.35s var(--ease-out), transform 0.35s var(--ease-out);
+  height: 100%;
 }
 .reveal.visible {
-opacity: 1;
-transform: translateY(0);
+  opacity: 1;
+  transform: translateY(0);
 }
 
 /* ============================================
@@ -1112,6 +1114,13 @@ transform: translateY(0);
 
 /* <= 767px (Móviles: 2 columnas elegantes, compactas y proporcionadas) */
 @media(max-width:767px){
+  /* Desactivar desplazamiento en scroll reveal en móvil para scroll fluido sin saltos ni tirones */
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
   .catalog{
     padding:var(--space-xl) 10px;
   }
@@ -1142,20 +1151,42 @@ transform: translateY(0);
     border-radius:12px 12px 0 0;
   }
 
-  /* Ocultar flechas del carrusel en móvil para despejar la foto (deslizamiento táctil nativo) */
+  /* Flechas del carrusel visibles y cómodas para presionar en móvil */
   .carousel-arrow{
-    display:none!important;
+    display:flex!important;
+    opacity:.9;
+    width:28px;
+    height:28px;
+    background:rgba(11,19,43,.75);
+    backdrop-filter:blur(4px);
+    -webkit-backdrop-filter:blur(4px);
+    border:1px solid rgba(255,255,255,.2);
+    box-shadow:0 2px 8px rgba(0,0,0,.35);
+  }
+  .carousel-arrow:active{
+    background:rgba(91,192,235,.6);
+    transform:translateY(-50%) scale(0.92);
+  }
+  .carousel-arrow.prev{left:4px}
+  .carousel-arrow.next{right:4px}
+  .carousel-arrow svg{
+    width:14px;
+    height:14px;
   }
   .carousel-dots{
     bottom:6px;
     gap:4px;
   }
   .carousel-dot{
-    width:5px;
-    height:5px;
+    width:6px;
+    height:6px;
+    padding:3px;
+    box-sizing:content-box;
+    background-clip:content-box;
   }
   .carousel-dot.active{
-    width:14px;
+    width:16px;
+    background-clip:content-box;
   }
 
   .price-badge{

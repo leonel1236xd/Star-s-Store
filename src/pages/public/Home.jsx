@@ -92,7 +92,14 @@ export default function Home() {
             "Viste con carácter. El estilo y el ajuste perfecto marcan tu camino."
           </p>
         </div>
-        <a href="#catalogo" className="scroll-indicator">
+        <a
+          href="#catalogo"
+          className="scroll-indicator"
+          onClick={(e) => {
+            e.preventDefault();
+            document.getElementById('catalogo')?.scrollIntoView({ behavior: 'smooth' });
+          }}
+        >
           <span>Explorar Catálogo</span>
           <div className="chevron" />
         </a>

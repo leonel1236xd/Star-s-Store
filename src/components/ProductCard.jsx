@@ -99,23 +99,66 @@ export default function ProductCard({ product }) {
   const images = Array.isArray(product.imagenes) && product.imagenes.length > 0 ? product.imagenes : [];
 
   const nextImage = (e) => {
-    e.preventDefault();
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
     if (images.length > 1) {
       setCurrentImageIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
     }
   };
 
   const prevImage = (e) => {
-    e.preventDefault();
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
     if (images.length > 1) {
       setCurrentImageIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
     }
   };
 
+  // Soporte para gestos táctiles (Swipe) en móviles
+  const touchStartXRef = useRef(0);
+  const touchStartYRef = useRef(0);
+  const touchDeltaXRef = useRef(0);
+
+  const handleTouchStart = (e) => {
+    if (images.length <= 1) return;
+    touchStartXRef.current = e.touches[0].clientX;
+    touchStartYRef.current = e.touches[0].clientY;
+    touchDeltaXRef.current = 0;
+  };
+
+  const handleTouchMove = (e) => {
+    if (images.length <= 1) return;
+    const deltaX = e.touches[0].clientX - touchStartXRef.current;
+    const deltaY = e.touches[0].clientY - touchStartYRef.current;
+    if (Math.abs(deltaX) > Math.abs(deltaY)) {
+      touchDeltaXRef.current = deltaX;
+    }
+  };
+
+  const handleTouchEnd = () => {
+    if (images.length <= 1) return;
+    const minSwipeDistance = 35;
+    if (touchDeltaXRef.current < -minSwipeDistance) {
+      setCurrentImageIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
+    } else if (touchDeltaXRef.current > minSwipeDistance) {
+      setCurrentImageIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
+    }
+    touchDeltaXRef.current = 0;
+  };
+
   return (
-    <article className="product-card reveal visible">
+    <article className="product-card">
       {/* ─── CONTENEDOR DEL CARRUSEL ─── */}
-      <div className="carousel">
+      <div
+        className="carousel"
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+      >
         {/* Badges de Estado */}
         <div className="product-badges">
           {availableVariants.length === 0 && (
@@ -141,7 +184,6 @@ export default function ProductCard({ product }) {
           style={{
             transition: 'transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
             transform: `translateX(-${currentImageIndex * 100}%)`,
-            overflowX: 'visible',
           }}
         >
           {images.length > 0 ? (
@@ -182,6 +224,7 @@ export default function ProductCard({ product }) {
                   className={`carousel-dot ${currentImageIndex === index ? 'active' : ''}`}
                   onClick={(e) => {
                     e.preventDefault();
+                    e.stopPropagation();
                     setCurrentImageIndex(index);
                   }}
                   aria-label={`Ver imagen ${index + 1}`}

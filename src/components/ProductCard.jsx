@@ -117,73 +117,19 @@ export default function ProductCard({ product }) {
       {/* ─── CONTENEDOR DEL CARRUSEL ─── */}
       <div className="carousel">
         {/* Badges de Estado */}
-        <div
-          style={{
-            position: 'absolute',
-            top: '14px',
-            left: '14px',
-            zIndex: 5,
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '6px',
-          }}
-        >
+        <div className="product-badges">
           {availableVariants.length === 0 && (
-            <div
-              style={{
-                background: '#4B5563',
-                color: '#FFFFFF',
-                fontSize: '0.7rem',
-                fontWeight: 800,
-                padding: '4px 10px',
-                borderRadius: '6px',
-                textTransform: 'uppercase',
-                letterSpacing: '0.5px',
-                boxShadow: '0 2px 10px rgba(0, 0, 0, 0.4)',
-                textAlign: 'center',
-                whiteSpace: 'nowrap',
-              }}
-            >
+            <div className="product-badge badge-agotado">
               AGOTADO
             </div>
           )}
           {product.is_promo && (
-            <div
-              className="badge-shimmer"
-              style={{
-                background: '#EF4444',
-                color: '#FFFFFF',
-                fontSize: '0.7rem',
-                fontWeight: 800,
-                padding: '4px 10px',
-                borderRadius: '6px',
-                textTransform: 'uppercase',
-                letterSpacing: '0.5px',
-                boxShadow: '0 2px 10px rgba(239, 68, 68, 0.45)',
-                textAlign: 'center',
-                whiteSpace: 'nowrap',
-              }}
-            >
+            <div className="product-badge badge-promo badge-shimmer">
               PROMO
             </div>
           )}
           {product.is_novelty && (
-            <div
-              className="badge-shimmer"
-              style={{
-                background: '#10B981',
-                color: '#FFFFFF',
-                fontSize: '0.7rem',
-                fontWeight: 800,
-                padding: '4px 10px',
-                borderRadius: '6px',
-                textTransform: 'uppercase',
-                letterSpacing: '0.5px',
-                boxShadow: '0 2px 10px rgba(16, 185, 129, 0.45)',
-                textAlign: 'center',
-                whiteSpace: 'nowrap',
-              }}
-            >
+            <div className="product-badge badge-nuevo badge-shimmer">
               NUEVO
             </div>
           )}

@@ -74,10 +74,13 @@ export default function Catalog() {
           }
         });
       },
-      { threshold: 0.1 }
+      {
+        threshold: 0.05,
+        rootMargin: '0px 0px 30px 0px',
+      }
     );
 
-    const elements = document.querySelectorAll('.reveal');
+    const elements = document.querySelectorAll('.catalog .reveal');
     elements.forEach((el) => observer.observe(el));
 
     return () => observer.disconnect();
@@ -174,7 +177,10 @@ export default function Catalog() {
             <div
               key={`${activeFilter}-${product.id}`}
               className="reveal product-stagger"
-              style={{ animationDelay: `${(index % 8) * 55}ms` }}
+              style={{
+                animationDelay: `${(index % 8) * 55}ms`,
+                transitionDelay: `${(index % 2) * 50}ms`,
+              }}
             >
               <ProductCard product={product} />
             </div>

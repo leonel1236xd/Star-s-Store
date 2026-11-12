@@ -24,10 +24,13 @@ export default function Home() {
           }
         });
       },
-      { threshold: 0.15 }
+      {
+        threshold: 0.05,
+        rootMargin: '0px 0px 30px 0px',
+      }
     );
 
-    const elements = document.querySelectorAll('.reveal');
+    const elements = document.querySelectorAll('.about-section .reveal, .contact-section .reveal');
     elements.forEach((el) => observer.observe(el));
 
     return () => observer.disconnect();

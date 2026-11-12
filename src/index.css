@@ -1099,8 +1099,10 @@ a.contact-value:hover {
 /* Clases para animación al hacer scroll */
 .reveal {
   opacity: 0;
-  transform: translateY(12px);
-  transition: opacity 0.35s var(--ease-out), transform 0.35s var(--ease-out);
+  transform: translateY(18px);
+  transition: opacity 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              transform 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  will-change: opacity, transform;
   height: 100%;
 }
 .reveal.visible {
@@ -1114,11 +1116,11 @@ a.contact-value:hover {
 
 /* <= 767px (Móviles: 2 columnas elegantes, compactas y proporcionadas) */
 @media(max-width:767px){
-  /* Desactivar desplazamiento en scroll reveal en móvil para scroll fluido sin saltos ni tirones */
+  /* Animación de aparición suave y proporcionada al scrollear en móvil */
   .reveal {
-    opacity: 1 !important;
-    transform: none !important;
-    transition: none !important;
+    transform: translateY(14px);
+    transition: opacity 0.38s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                transform 0.38s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
   .catalog{
